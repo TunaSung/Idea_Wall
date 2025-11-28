@@ -362,5 +362,3 @@ export type Idea = {
 
 本專案可依實際需求選擇 License（如 MIT）。  
 若僅作為面試或團隊內部練習，也可以暫不標註正式 License。
-#   I d e a _ W a l l  
- 
