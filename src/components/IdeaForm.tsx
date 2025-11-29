@@ -9,7 +9,7 @@ type IdeaFormProps = {
   error: string | null;
 };
 
-export function IdeaForm({
+function IdeaForm({
   value,
   onChange,
   onSubmit,
@@ -37,7 +37,7 @@ export function IdeaForm({
             </h2>
           </div>
           <span className="rounded-full bg-slate-800/80 px-2.5 py-1 text-[11px] text-slate-300">
-            Ctrl / ⌘ + Enter 送出
+            Ctrl + Enter 送出
           </span>
         </div>
 
@@ -90,3 +90,5 @@ export function IdeaForm({
     </section>
   );
 }
+
+export default IdeaForm;

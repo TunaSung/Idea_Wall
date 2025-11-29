@@ -1,41 +1,13 @@
 import { Flame, Clock3, ListChecks } from "lucide-react";
-import type { Idea } from "../../types";
+import type { Idea } from "../types";
+import { getStats } from "../lib/getStats";
 
 type IdeaStatsProps = {
   ideas: Idea[];
   loading: boolean;
 };
 
-function getStats(ideas: Idea[]) {
-  const total = ideas.length;
-  const now = new Date();
-  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const sevenDaysAgo = new Date(startOfToday);
-  sevenDaysAgo.setDate(startOfToday.getDate() - 6);
-
-  let todayCount = 0;
-  let weekCount = 0;
-  let firstCreatedAt: Date | null = null;
-
-  for (const idea of ideas) {
-    const created = new Date(idea.created_at);
-    if (created >= startOfToday) todayCount++;
-    if (created >= sevenDaysAgo) weekCount++;
-
-    if (!firstCreatedAt || created < firstCreatedAt) {
-      firstCreatedAt = created;
-    }
-  }
-
-  return {
-    total,
-    todayCount,
-    weekCount,
-    firstCreatedAt,
-  };
-}
-
-export function IdeaStats({ ideas, loading }: IdeaStatsProps) {
+function IdeaStats({ ideas, loading }: IdeaStatsProps) {
   const { total, todayCount, weekCount, firstCreatedAt } = getStats(ideas);
 
   return (
@@ -96,12 +68,12 @@ export function IdeaStats({ ideas, loading }: IdeaStatsProps) {
             <p className="text-lg font-semibold text-slate-50 sm:text-xl">
               {loading ? "…" : todayCount}
             </p>
-            <p className="text-[11px] text-slate-400">
-              今天新增的靈感數量
-            </p>
+            <p className="text-[11px] text-slate-400">今天新增的靈感數量</p>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
+export default IdeaStats;

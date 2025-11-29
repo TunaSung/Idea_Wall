@@ -2,12 +2,11 @@ import "./App.css"
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabaseClient";
 import type { Idea } from "./types";
-import { AppShell } from "./components/layout/AppShell";
-import { IdeaHeader } from "./components/idea/IdeaHeader";
-import { IdeaStats } from "./components/idea/IdeaStats";
-import { IdeaForm } from "./components/idea/IdeaForm";
-import { IdeaToolbar, type IdeaFilter } from "./components/idea/IdeaToolbar";
-import { IdeaList } from "./components/idea/IdeaList";
+import IdeaHeader from "./components/IdeaHeader";
+import IdeaStats from "./components/IdeaStats";
+import IdeaForm from "./components/IdeaForm";
+import { IdeaToolbar, type IdeaFilter } from "./components/IdeaToolbar";
+import IdeaList from "./components/IdeaList";
 
 function App() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
@@ -101,40 +100,43 @@ function App() {
   });
 
   return (
-    <AppShell>
-      <IdeaHeader />
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-8 lg:py-10">
+        <IdeaHeader />
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.95fr)]">
-        {/* 左側：統計 + 表單 */}
-        <div className="space-y-6">
-          <IdeaStats ideas={ideas} loading={loading} />
-          <IdeaForm
-            value={newIdea}
-            onChange={setNewIdea}
-            onSubmit={handleSubmitIdea}
-            submitting={submitting}
-            error={error}
-          />
+        <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.95fr)]">
+          {/* 左側：統計 + 表單 */}
+          <div className="space-y-6">
+            <IdeaStats ideas={ideas} loading={loading} />
+            <IdeaForm
+              value={newIdea}
+              onChange={setNewIdea}
+              onSubmit={handleSubmitIdea}
+              submitting={submitting}
+              error={error}
+            />
+          </div>
+
+          {/* 右側：工具列 + 清單 */}
+          <div className="space-y-4">
+            <IdeaToolbar
+              filter={filter}
+              onFilterChange={setFilter}
+              search={search}
+              onSearchChange={setSearch}
+              totalCount={ideas.length}
+              visibleCount={filteredIdeas.length}
+            />
+            <IdeaList
+              ideas={filteredIdeas}
+              loading={loading}
+              activeFilter={filter}
+            />
+          </div>
         </div>
 
-        {/* 右側：工具列 + 清單 */}
-        <div className="space-y-4">
-          <IdeaToolbar
-            filter={filter}
-            onFilterChange={setFilter}
-            search={search}
-            onSearchChange={setSearch}
-            totalCount={ideas.length}
-            visibleCount={filteredIdeas.length}
-          />
-          <IdeaList
-            ideas={filteredIdeas}
-            loading={loading}
-            activeFilter={filter}
-          />
-        </div>
       </div>
-    </AppShell>
+    </div>
   );
 }
 

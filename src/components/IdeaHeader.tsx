@@ -1,6 +1,7 @@
 import { Lightbulb, Sparkles } from "lucide-react";
+import { memo } from "react";
 
-export function IdeaHeader() {
+function IdeaHeader() {
   return (
     <header className="space-y-4">
       <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-200">
@@ -38,3 +39,5 @@ export function IdeaHeader() {
     </header>
   );
 }
+
+export default memo(IdeaHeader);
