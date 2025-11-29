@@ -1,7 +1,20 @@
-import { Lightbulb, Sparkles } from "lucide-react";
 import { memo } from "react";
+import { Lightbulb } from "lucide-react";
+import type { User } from "@supabase/supabase-js";
 
-function IdeaHeader() {
+type IdeaHeaderProps = {
+  user: User | null;
+};
+
+function getDisplayName(user: User | null) {
+  if (!user) return "";
+  const meta = user.user_metadata as { display_name?: string } | undefined;
+  return meta?.display_name || user.email || "未命名使用者";
+}
+
+function IdeaHeader({ user }: IdeaHeaderProps) {
+  const name = getDisplayName(user);
+
   return (
     <header className="space-y-4">
       <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-200">
@@ -23,21 +36,9 @@ function IdeaHeader() {
             讓好點子不再淹沒在 chat 訊息裡。
           </p>
         </div>
-
-        <div className="flex items-center gap-2 rounded-2xl border border-slate-700/80 bg-slate-900/70 px-3 py-2 text-xs text-slate-300 shadow-sm">
-          <Sparkles className="h-4 w-4 text-emerald-300" />
-          <div className="flex flex-col leading-snug">
-            <span className="font-medium text-slate-100">
-              AI-assisted coding ready
-            </span>
-            <span className="text-[11px] text-slate-400">
-              React · Supabase · Tailwind · GitHub
-            </span>
-          </div>
-        </div>
       </div>
     </header>
   );
 }
 
-export default memo(IdeaHeader);
+export default memo(IdeaHeader)

@@ -1,5 +1,5 @@
-import { type FormEvent } from "react";
-import { Sparkles } from "lucide-react";
+import type { FormEvent } from "react";
+import { Sparkles, Lock } from "lucide-react";
 
 type IdeaFormProps = {
   value: string;
@@ -7,6 +7,8 @@ type IdeaFormProps = {
   onSubmit: () => void;
   submitting: boolean;
   error: string | null;
+  canSubmit: boolean;
+  currentUserName: string | null;
 };
 
 function IdeaForm({
@@ -15,13 +17,16 @@ function IdeaForm({
   onSubmit,
   submitting,
   error,
+  canSubmit,
+  currentUserName,
 }: IdeaFormProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!canSubmit) return;
     onSubmit();
   };
 
-  const disabled = submitting || !value.trim();
+  const disabled = submitting || !value.trim() || !canSubmit;
 
   return (
     <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/80 p-5 shadow-lg">
@@ -44,23 +49,24 @@ function IdeaForm({
         <form onSubmit={handleSubmit} className="space-y-3">
           <textarea
             className="min-h-[120px] w-full rounded-xl border border-slate-700/80 bg-slate-950/80 px-3.5 py-2.5 text-sm text-slate-50 shadow-inner outline-none transition focus:border-emerald-400/80 focus:ring-2 focus:ring-emerald-500/40 disabled:cursor-not-allowed disabled:opacity-60"
-            placeholder="寫下你的技術實驗、流程優化或產品構想⋯⋯"
+            placeholder={
+              canSubmit
+                ? "寫下你的技術實驗、流程優化或產品構想⋯⋯"
+                : "請先登入後再留下你的金點子 ✨"
+            }
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            disabled={submitting}
+            disabled={submitting || !canSubmit}
             onKeyDown={(e) => {
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
-                onSubmit();
+                if (canSubmit) onSubmit();
               }
             }}
           />
           <div className="flex items-center justify-between gap-3">
             {error && <p className="text-xs text-red-400">{error}</p>}
             <div className="flex flex-1 items-center justify-end gap-2">
-              <span className="hidden text-[11px] text-slate-400 sm:inline">
-                送出後會即時出現在右側清單最上方
-              </span>
               <button
                 type="submit"
                 disabled={disabled}
@@ -68,24 +74,24 @@ function IdeaForm({
               >
                 {submitting ? (
                   <>
-                    <span className="h-3 w-3 animate-spin rounded-full border border-slate-900/40 border-t-slate-900" />
+                    <span className="h-3 w-3 animate-spin rounded-full border-[2px] border-slate-900/40 border-t-slate-900" />
                     送出中…
                   </>
-                ) : (
+                ) : canSubmit ? (
                   <>
                     <span>✨</span>
                     <span>送出想法</span>
+                  </>
+                ) : (
+                  <>
+                    <Lock className="h-3 w-3" />
+                    <span>請先登入</span>
                   </>
                 )}
               </button>
             </div>
           </div>
         </form>
-
-        <div className="mt-1 text-[11px] text-slate-400">
-          可以簡單寫，也可以先列出幾個 bulletpoint，
-          之後再挑出值得做成專案的主題。
-        </div>
       </div>
     </section>
   );

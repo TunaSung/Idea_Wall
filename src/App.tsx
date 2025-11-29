@@ -1,14 +1,24 @@
-import "./App.css"
+import "./App.css";
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabaseClient";
 import type { Idea } from "./types";
-import IdeaHeader from "./components/IdeaHeader";
-import IdeaStats from "./components/IdeaStats";
-import IdeaForm from "./components/IdeaForm";
-import { IdeaToolbar, type IdeaFilter } from "./components/IdeaToolbar";
-import IdeaList from "./components/IdeaList";
+import IdeaHeader from "./components/idea/IdeaHeader";
+import IdeaStats from "./components/idea/IdeaStats";
+import IdeaForm from "./components/idea/IdeaForm";
+import { IdeaToolbar, type IdeaFilter } from "./components/idea/IdeaToolbar";
+import IdeaList from "./components/idea/IdeaList";
+import AuthPanel from "./components/auth/AuthPanel";
+import { useAuth } from "./contexts/AuthContext";
+
+function getDisplayNameFromUser(user: ReturnType<typeof useAuth>["user"]) {
+  if (!user) return null;
+  const meta = user.user_metadata as { display_name?: string } | undefined;
+  return meta?.display_name || user.email || "未命名使用者";
+}
 
 function App() {
+  const { user } = useAuth();
+
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -47,12 +57,23 @@ function App() {
     const trimmed = newIdea.trim();
     if (!trimmed) return;
 
+    if (!user) {
+      setError("請先登入再送出想法。");
+      return;
+    }
+
+    const displayName = getDisplayNameFromUser(user);
+
     setSubmitting(true);
     setError(null);
 
     const { data, error } = await supabase
       .from("ideas")
-      .insert({ content: trimmed })
+      .insert({
+        content: trimmed,
+        user_id: user.id,
+        author_name: displayName,
+      })
       .select()
       .single();
 
@@ -99,10 +120,17 @@ function App() {
     return true;
   });
 
+  const currentUserName = getDisplayNameFromUser(user);
+
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-8 lg:py-10">
-        <IdeaHeader />
+        <IdeaHeader user={user} />
+
+        {/* 登入/註冊區 */}
+        <div className="mt-4">
+          <AuthPanel />
+        </div>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.95fr)]">
           {/* 左側：統計 + 表單 */}
@@ -114,6 +142,8 @@ function App() {
               onSubmit={handleSubmitIdea}
               submitting={submitting}
               error={error}
+              canSubmit={!!user}
+              currentUserName={currentUserName}
             />
           </div>
 
@@ -134,7 +164,6 @@ function App() {
             />
           </div>
         </div>
-
       </div>
     </div>
   );

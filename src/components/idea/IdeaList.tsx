@@ -1,4 +1,4 @@
-import type { Idea } from "../types";
+import type { Idea } from "../../types";
 import type { IdeaFilter } from "./IdeaToolbar";
 import IdeaListItem from "./IdeaListItem";
 
@@ -50,7 +50,7 @@ function IdeaList({ ideas, loading, activeFilter }: IdeaListProps) {
         ) : (
           <div className="max-h-[460px] space-y-3 overflow-y-auto pr-1.5 pt-1">
             {ideas.map((idea, index) => (
-              <IdeaListItem idea={idea} ideas={ideas} index={index} />
+              <IdeaListItem idea={idea} />
             ))}
           </div>
         )}

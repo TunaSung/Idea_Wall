@@ -1,6 +1,6 @@
 import { Flame, Clock3, ListChecks } from "lucide-react";
-import type { Idea } from "../types";
-import { getStats } from "../lib/getStats";
+import type { Idea } from "../../types";
+import { getStats } from "../../lib/getStats";
 
 type IdeaStatsProps = {
   ideas: Idea[];
@@ -8,7 +8,7 @@ type IdeaStatsProps = {
 };
 
 function IdeaStats({ ideas, loading }: IdeaStatsProps) {
-  const { total, todayCount, weekCount, firstCreatedAt } = getStats(ideas);
+  const { total, todayCount, weekCount } = getStats(ideas);
 
   return (
     <section className="rounded-2xl border border-white/10 bg-slate-900/80 p-4 shadow-lg">
@@ -16,11 +16,6 @@ function IdeaStats({ ideas, loading }: IdeaStatsProps) {
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">
           活躍概況
         </p>
-        {firstCreatedAt && (
-          <p className="text-[11px] text-slate-400">
-            牆建立於 {firstCreatedAt.toLocaleDateString()}
-          </p>
-        )}
       </div>
 
       <div className="grid grid-cols-3 gap-3 text-xs sm:text-sm">
