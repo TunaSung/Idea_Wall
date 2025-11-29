@@ -1,19 +1,7 @@
 import { memo } from "react";
 import { Lightbulb } from "lucide-react";
-import type { User } from "@supabase/supabase-js";
 
-type IdeaHeaderProps = {
-  user: User | null;
-};
-
-function getDisplayName(user: User | null) {
-  if (!user) return "";
-  const meta = user.user_metadata as { display_name?: string } | undefined;
-  return meta?.display_name || user.email || "未命名使用者";
-}
-
-function IdeaHeader({ user }: IdeaHeaderProps) {
-  const name = getDisplayName(user);
+function IdeaHeader() {
 
   return (
     <header className="space-y-4">
