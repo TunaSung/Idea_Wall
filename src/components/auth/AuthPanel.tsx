@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { LogIn, LogOut, UserPlus, User } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
-
-function getDisplayName(user: ReturnType<typeof useAuth>["user"]) {
-  if (!user) return "";
-  const meta = user.user_metadata as { display_name?: string } | undefined;
-  return meta?.display_name || user.email || "未命名使用者";
-}
+import { getDisplayName } from "../../lib/getDisplayName";
 
 function AuthPanel() {
   const { user, loading, signIn, signUp, signOut } = useAuth();
@@ -151,7 +146,7 @@ function AuthPanel() {
         >
           {submitting ? (
             <>
-              <span className="h-3 w-3 animate-spin rounded-full border-[2px] border-slate-900/30 border-t-slate-900" />
+              <span className="h-3 w-3 animate-spin rounded-full border border-slate-900/30 border-t-slate-900" />
               處理中…
             </>
           ) : mode === "signin" ? (

@@ -9,12 +9,7 @@ import { IdeaToolbar, type IdeaFilter } from "./components/idea/IdeaToolbar";
 import IdeaList from "./components/idea/IdeaList";
 import AuthPanel from "./components/auth/AuthPanel";
 import { useAuth } from "./contexts/AuthContext";
-
-function getDisplayNameFromUser(user: ReturnType<typeof useAuth>["user"]) {
-  if (!user) return null;
-  const meta = user.user_metadata as { display_name?: string } | undefined;
-  return meta?.display_name || user.email || "未命名使用者";
-}
+import { getDisplayName } from "./lib/getDisplayName";
 
 function App() {
   const { user } = useAuth();
@@ -62,7 +57,7 @@ function App() {
       return;
     }
 
-    const displayName = getDisplayNameFromUser(user);
+    const displayName = getDisplayName(user);
 
     setSubmitting(true);
     setError(null);
@@ -120,12 +115,10 @@ function App() {
     return true;
   });
 
-  const currentUserName = getDisplayNameFromUser(user);
-
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-8 lg:py-10">
-        <IdeaHeader user={user} />
+        <IdeaHeader />
 
         {/* 登入/註冊區 */}
         <div className="mt-4">
@@ -143,7 +136,6 @@ function App() {
               submitting={submitting}
               error={error}
               canSubmit={!!user}
-              currentUserName={currentUserName}
             />
           </div>
 
