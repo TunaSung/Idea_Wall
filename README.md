@@ -53,7 +53,7 @@
 
 ## 技術棧 (Tech Stack)
 
-- **Framework**：React 18 + Vite
+- **Framework**：React 19 + Vite
 - **Language**：TypeScript
 - **Styling**：Tailwind CSS
 - **Backend / DB**：Supabase
@@ -82,8 +82,6 @@
 │  ├─ contexts/
 │  │  └─ AuthContext.tsx       # 管理登入狀態與 Auth 操作
 │  ├─ components/
-│  │  ├─ layout/
-│  │  │  └─ AppShell.tsx       # 頁面外框 / 佈局容器
 │  │  ├─ auth/
 │  │  │  └─ AuthPanel.tsx      # 登入 / 註冊 / 登出 UI
 │  │  └─ idea/
@@ -272,7 +270,7 @@ export type Idea = {
 - 提供 `signIn / signUp / signOut` 方法。
 - 把 `user` 與 `loading` 狀態傳給整個 App。
 
-`App`、`IdeaHeader`、`IdeaForm`、`AuthPanel` 等元件都透過 `useAuth()` 取得目前 user。
+`App`、`IdeaForm`、`AuthPanel` 等元件都透過 `useAuth()` 取得目前 user。
 
 ### 4. 寫入想法時綁定使用者
 
@@ -335,9 +333,8 @@ const handleSubmitIdea = async () => {
    - 將結果傳入 `IdeaList` 顯示。
 
 5. **UI 分層**
-   - `AppShell`：頁面外框與背景。
    - `AuthPanel`：登入 / 註冊 / 顯示當前使用者。
-   - `IdeaHeader`：標題與依登入狀態顯示不同歡迎訊息。
+   - `IdeaHeader`：標題。
    - `IdeaForm`：新增想法表單（未登入時顯示「請先登入」）。
    - `IdeaStats`：整體 / 近七天 / 今日統計。
    - `IdeaToolbar`：篩選與搜尋。
@@ -354,7 +351,7 @@ const handleSubmitIdea = async () => {
 
 > 「我想用 React + Vite + Supabase + Tailwind 做一個『創意想法牆』的 MVP。  
 > 功能：顯示想法清單、送出新想法、成功後即時插入清單最上方。  
-> 請幫我規劃元件切分（含 AppShell / Header / Form / Stats / List 等），並說明每個元件各自負責的狀態與 props。」
+> 請幫我規劃元件切分。」
 
 ### Prompt 2：與 Supabase 整合的正確寫法
 
@@ -362,21 +359,13 @@ const handleSubmitIdea = async () => {
 > 要求：依 `created_at` 由新到舊排序，並處理 loading / error 狀態。  
 > 同時請提醒我環境變數在 Vite 專案中要如何命名與使用。」
 
-### Prompt 3：送出新想法後的 state 更新方式
+### Prompt 3：UI + 元件化設計
 
-> 「當我在 Supabase 插入一筆新 `idea` 後，不想重新抓全部清單。  
-> 請用 TypeScript 示範：在 React 中如何根據 insert 的回傳值，  
-> 直接將新紀錄插入到現有 state 陣列的最前面，並避免 mutate 原本的陣列。」
+> 「深色玻璃風 UI、左右兩欄 layout、上方統計卡片、右側時間軸列表，  
+> 可以使用外部的 UI 套件。  
+> 請幫我拆成多個元件（IdeaHeader / IdeaStats / IdeaForm / IdeaToolbar / IdeaList）。」
 
-### Prompt 4：Plus 版 UI + 元件化設計
-
-> 「我已有一個基本版的想法牆，現在想升級成  
-> 深色玻璃風 UI、左右兩欄 layout、上方統計卡片、右側時間軸列表，  
-> 並使用 `lucide-react` 作為 icon。  
-> 請幫我拆成多個元件（AppShell / IdeaHeader / IdeaStats / IdeaForm / IdeaToolbar / IdeaList），  
-> 並提供 Tailwind CSS 的 className 建議。」
-
-### Prompt 5：整合 Supabase Auth 並在 UI 顯示作者名稱
+### Prompt 4：整合 Supabase Auth 並在 UI 顯示作者名稱
 
 > 「幫我在現有的 Idea Wall 中加入 Supabase Auth（Email + Password），  
 > 要求：  
