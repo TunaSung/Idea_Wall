@@ -79,7 +79,7 @@ function AuthPanel() {
             <UserPlus className="h-4 w-4 text-emerald-300" />
           )}
           <span className="font-semibold">
-            {mode === "signin" ? "登入留下您的想法!" : "建立帳號後開始想法發散吧!"}
+            {mode === "signin" ? "登入留下您的想法!" : "建立帳號後開始想法發散吧! (註冊後請至指定 Email 做 Supabase 帳戶認證)"}
           </span>
         </div>
         <button
