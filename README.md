@@ -90,7 +90,7 @@
 │  │     ├─ IdeaForm.tsx       # 新增想法表單（未登入時鎖住）
 │  │     ├─ IdeaToolbar.tsx    # 篩選、搜尋工具列
 │  │     └─ IdeaList.tsx       # 右側時間軸清單 UI（顯示作者名稱）
-├─ .env.local                  # Supabase 相關環境變數 (不應提交到 git)
+├─ .env                        # Supabase 相關環境變數 (不應提交到 git)
 ├─ index.html
 ├─ package.json
 ├─ tailwind.config.js
