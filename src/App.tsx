@@ -47,6 +47,33 @@ function App() {
     fetchIdeas();
   }, []);
 
+  // 讓所有人可以同時看到
+  useEffect(() => {
+    const channel = supabase
+      .channel("ideas-realtime")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "ideas",
+        },
+        (payload) => {
+          const newIdea = payload.new as Idea;
+          setIdeas((prev) => {
+            // 避免重複插入：如果已經存在就略過
+            if (prev.some((i) => i.id === newIdea.id)) return prev;
+            return [newIdea, ...prev];
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   // 送出新想法
   const handleSubmitIdea = async () => {
     const trimmed = newIdea.trim();
