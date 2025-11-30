@@ -8,7 +8,6 @@ type IdeaFormProps = {
   submitting: boolean;
   error: string | null;
   canSubmit: boolean;
-  currentUserName: string | null;
 };
 
 function IdeaForm({
@@ -17,8 +16,7 @@ function IdeaForm({
   onSubmit,
   submitting,
   error,
-  canSubmit,
-  currentUserName,
+  canSubmit
 }: IdeaFormProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -51,8 +49,8 @@ function IdeaForm({
             className="min-h-[120px] w-full rounded-xl border border-slate-700/80 bg-slate-950/80 px-3.5 py-2.5 text-sm text-slate-50 shadow-inner outline-none transition focus:border-emerald-400/80 focus:ring-2 focus:ring-emerald-500/40 disabled:cursor-not-allowed disabled:opacity-60"
             placeholder={
               canSubmit
-                ? "寫下你的技術實驗、流程優化或產品構想⋯⋯"
-                : "請先登入後再留下你的金點子 ✨"
+                ? "寫下您的技術實驗、流程優化或產品構想⋯⋯"
+                : "請先登入後再留下您的金點子 ✨"
             }
             value={value}
             onChange={(e) => onChange(e.target.value)}
@@ -74,7 +72,7 @@ function IdeaForm({
               >
                 {submitting ? (
                   <>
-                    <span className="h-3 w-3 animate-spin rounded-full border-[2px] border-slate-900/40 border-t-slate-900" />
+                    <span className="h-3 w-3 animate-spin rounded-full border border-slate-900/40 border-t-slate-900" />
                     送出中…
                   </>
                 ) : canSubmit ? (

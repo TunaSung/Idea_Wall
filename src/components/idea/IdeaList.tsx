@@ -50,7 +50,7 @@ function IdeaList({ ideas, loading, activeFilter }: IdeaListProps) {
         ) : (
           <div className="max-h-[460px] space-y-3 overflow-y-auto pr-1.5 pt-1">
             {ideas.map((idea, index) => (
-              <IdeaListItem idea={idea} />
+              <IdeaListItem key={index} idea={idea} />
             ))}
           </div>
         )}
