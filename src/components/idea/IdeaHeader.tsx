@@ -5,11 +5,6 @@ function IdeaHeader() {
 
   return (
     <header className="space-y-4">
-      <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-200">
-        <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-300" />
-        INTERNAL · IDEA WALL
-      </div>
-
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
