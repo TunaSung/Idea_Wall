@@ -351,29 +351,29 @@ const handleSubmitIdea = async () => {
 
 > 「我想用 React + Vite + Supabase + Tailwind 做一個『創意想法牆』的 MVP。  
 > 功能：顯示想法清單、送出新想法、成功後即時插入清單最上方。  
-> 請幫我規劃元件切分。」
+> 幫我規劃元件切分。」
 
 ### Prompt 2：與 Supabase 整合的正確寫法
 
-> 「請給我一個在 React 中使用 `@supabase/supabase-js` 讀取 `ideas` 資料表的範例，  
+> 「給我一個在 React 中使用 `@supabase/supabase-js` 讀取 `ideas` 資料表的範例，  
 > 要求：依 `created_at` 由新到舊排序，並處理 loading / error 狀態。  
-> 同時請提醒我環境變數在 Vite 專案中要如何命名與使用。」
+> 同時提醒我環境變數在 Vite 專案中要如何命名與使用。」
 
 ### Prompt 3：UI + 元件化設計
 
 > 「深色玻璃風 UI、左右兩欄 layout、上方統計卡片、右側時間軸列表，  
 > 可以使用外部的 UI 套件。  
-> 請幫我拆成多個元件（IdeaHeader / IdeaStats / IdeaForm / IdeaToolbar / IdeaList）。」
+> 幫我拆成多個元件（IdeaHeader / IdeaStats / IdeaForm / IdeaToolbar / IdeaList）。」
 
 ### Prompt 4：整合 Supabase Auth 並在 UI 顯示作者名稱
 
-> 「幫我在現有的 Idea Wall 中加入 Supabase Auth（Email + Password），  
+> 「在現有的 Idea Wall 中加入 Supabase Auth（Email + Password），  
 > 要求：  
 > 1. 未登入時不能送出想法，表單要顯示提示。  
 > 2. 註冊時可以設定 display_name，存在 `user_metadata`。  
 > 3. 寫入想法時，把 `user_id` 和 `author_name` 一起寫進 `ideas` 表，  
 > 4. 在清單卡片上顯示 `by {author_name}`。  
-> 請同時提供 RLS policy 設定與 React 程式碼範例。」
+> 同時提供 RLS policy 設定與 React 程式碼範例。」
 
 ---
 
