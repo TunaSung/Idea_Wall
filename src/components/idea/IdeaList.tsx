@@ -41,7 +41,7 @@ function IdeaList({ ideas, loading, activeFilter }: IdeaListProps) {
             ))}
           </div>
         ) : ideas.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center gap-2 text-sm text-slate-400">
+          <div className="flex h-full flex-col items-center justify-center gap-2 pt-1 text-sm text-slate-400">
             <p>目前沒有符合條件的想法。</p>
             <p className="text-xs text-slate-500">
               可以調整篩選條件或清除搜尋關鍵字看看。
