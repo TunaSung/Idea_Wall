@@ -155,6 +155,15 @@ with check (auth.uid() = user_id);
 > GUI 上可以選 `INSERT` + `authenticated`，再把 `with check (true)` 改成  
 > `with check (auth.uid() = user_id)`。
 
+### 5. 多人同時使用與 Realtime 設計
+
+支援「多個使用者同時送出想法」 
+在 Supabase 的 SQL Editor 中執行：
+
+```sql
+alter publication supabase_realtime add table public.ideas;
+```
+
 ---
 
 ## 使用者資料與 `auth.users`
@@ -355,25 +364,34 @@ const handleSubmitIdea = async () => {
 
 ### Prompt 2：與 Supabase 整合的正確寫法
 
-> 「給我一個在 React 中使用 `@supabase/supabase-js` 讀取 `ideas` 資料表的範例，  
-> 要求：依 `created_at` 由新到舊排序，並處理 loading / error 狀態。  
+> 「給我一個使用 Supabase 建立 table 的流程，
+> 以及在 React 中使用 `supabase` 讀取 `ideas` 資料表的範例，  
+> 要求：由新到舊排序、使用登入存取使用者名稱、使用者有同時發送訊息的情況
 > 同時提醒我環境變數在 Vite 專案中要如何命名與使用。」
 
 ### Prompt 3：UI + 元件化設計
 
-> 「深色玻璃風 UI、左右兩欄 layout、上方統計卡片、右側時間軸列表，  
+> 「深色 UI、左右兩欄 layout、上方統計卡片、右側時間軸列表，  
 > 可以使用外部的 UI 套件。  
-> 幫我拆成多個元件（IdeaHeader / IdeaStats / IdeaForm / IdeaToolbar / IdeaList）。」
+> 幫我拆成多個元件。」
 
 ### Prompt 4：整合 Supabase Auth 並在 UI 顯示作者名稱
 
 > 「在現有的 Idea Wall 中加入 Supabase Auth（Email + Password），  
 > 要求：  
 > 1. 未登入時不能送出想法，表單要顯示提示。  
-> 2. 註冊時可以設定 display_name，存在 `user_metadata`。  
-> 3. 寫入想法時，把 `user_id` 和 `author_name` 一起寫進 `ideas` 表，  
-> 4. 在清單卡片上顯示 `by {author_name}`。  
+> 2. 註冊時可以設定暱稱。   
+> 3. 在清單卡片上顯示此暱稱。  
 > 同時提供 RLS policy 設定與 React 程式碼範例。」
+
+### Prompt 5：多人同時使用與 Realtime 設計
+
+> 「考慮『多個使用者同時送出想法』的情境。  
+> 幫我：
+> 1. 說明在多使用者同時 insert 時 DB 的運作方式。  
+> 2. 設計一個讓所有打開頁面的人可以即時看到新想法，包含：  
+>    - Supabase 額外的設定。  
+>    - 前端如何配合此改動更新畫面。」
 
 ---
 
@@ -388,7 +406,7 @@ const handleSubmitIdea = async () => {
 
 2. **對 AI 產出的程式碼做主動審查**
    - 檢查是否：
-     - 符合 Vite + React 的最佳實踐（環境變數命名、StrictMode 等）。
+     - 符合 Vite + React 的最佳實踐。
      - 沒有直接 mutate state（使用 immutable 寫法更新陣列）。
      - 在 Supabase 回傳 error 時提供適當的錯誤訊息與 UI 提示。
      - RLS policy 是否真的把 `user_id` 綁到 `auth.uid()`。
@@ -427,8 +445,3 @@ const handleSubmitIdea = async () => {
 - **不要** 將 Supabase 的 `anon` key 或其他敏感資訊推上公開 GitHub。
 
 ---
-
-## License
-
-本專案可依實際需求選擇 License（如 MIT）。  
-若僅作為面試或團隊內部練習，也可以暫不標註正式 License。
