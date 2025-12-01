@@ -11,11 +11,11 @@ type IdeaToolbarProps = {
   visibleCount: number;
 };
 
-const filters: { key: IdeaFilter; label: string }[] = ([
+const filters: { key: IdeaFilter; label: string }[] = [
   { key: "all", label: "全部" },
   { key: "today", label: "今天" },
   { key: "week", label: "近 7 天" },
-]);
+];
 
 export function IdeaToolbar({
   filter,
@@ -75,4 +75,4 @@ export function IdeaToolbar({
   );
 }
 
-export default IdeaToolbar
+export default IdeaToolbar;
