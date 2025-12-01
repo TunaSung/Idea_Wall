@@ -8,15 +8,29 @@ type IdeaStatsProps = {
   loading: boolean;
 };
 
-
 function IdeaStats({ ideas, loading }: IdeaStatsProps) {
   const { total, todayCount, weekCount } = getStats(ideas);
 
   const STATS = [
-    { icon: <ListChecks className="h-4 w-4 text-emerald-300" />, title: "累積想法", total: loading ? "…" : total, subtitle: "整體牆面的總數" },
-    { icon: <Clock3 className="h-4 w-4 text-cyan-300" />, title: "近 7 天", total: loading ? "…" : weekCount, subtitle: "最近一週的點子" },
-    { icon: <Flame className="h-4 w-4 text-amber-300" />, title: "今日動態", total: loading ? "…" : todayCount, subtitle: "今天新增的靈感數量" },
-  ]
+    {
+      icon: <ListChecks className="h-4 w-4 text-emerald-300" />,
+      title: "累積想法",
+      total: loading ? "…" : total,
+      subtitle: "整體牆面的總數",
+    },
+    {
+      icon: <Clock3 className="h-4 w-4 text-cyan-300" />,
+      title: "近 7 天",
+      total: loading ? "…" : weekCount,
+      subtitle: "最近一週的點子",
+    },
+    {
+      icon: <Flame className="h-4 w-4 text-amber-300" />,
+      title: "今日動態",
+      total: loading ? "…" : todayCount,
+      subtitle: "今天新增的靈感數量",
+    },
+  ];
 
   return (
     <section className="rounded-2xl border border-white/10 bg-slate-900/80 p-4 shadow-lg">
@@ -27,7 +41,7 @@ function IdeaStats({ ideas, loading }: IdeaStatsProps) {
       </div>
 
       <div className="grid grid-cols-3 gap-3 text-xs sm:text-sm">
-        {STATS.map(stat => (
+        {STATS.map((stat) => (
           <div className="relative overflow-hidden rounded-xl border border-slate-700/80 bg-slate-900/80 px-3 py-2.5">
             <div className="pointer-events-none absolute -right-6 -top-6 h-16 w-16 rounded-full bg-emerald-500/10 blur-2xl" />
             <div className="relative flex flex-col gap-1">
