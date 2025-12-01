@@ -43,7 +43,7 @@
   - 今日新增想法數。
   - 想法牆建立日期。
 
-- 🎨 **Plus 版 UI**
+- 🎨 **UI**
   - 深色玻璃風 (glassmorphism) 背景。
   - 具層次感的卡片、柔和光暈與漸層。
   - 使用 `lucide-react` icon 提升視覺質感。
@@ -352,39 +352,33 @@ const handleSubmitIdea = async () => {
 ---
 
 ## AI 輔助日誌 (AI-Assisted Coding Log)
-
-本專案特別將 AI 工具視為「pair programmer」，而非「自動幫我寫完作業的黑盒子」。  
+ 
 以下是開發過程中最關鍵、最有幫助的幾個提示詞 (Prompts) 範例：
 
-### Prompt 1：系統與 UI 架構規劃
+### Prompt 1：角色設定、系統與 UI 架構規劃
 
-> 「我想用 React + Vite + Supabase + Tailwind 做一個『創意想法牆』的 MVP。  
-> 功能：顯示想法清單、送出新想法、成功後即時插入清單最上方。  
-> 幫我規劃元件切分。」
+> 「你現在是個資深前端工程師兼前端工程師面試官。
+> 接下來我想用 React + Vite + Supabase + Tailwind 做一個『創意想法牆』的 MVP。  
+> 功能：顯示想法清單、送出新想法、成功後即時插入清單最上方。
+> 可以使用外部的 UI 套件。
+> 幫我規劃你會想看到的東西，並以此回基礎做元件切分。
+> 以及提供程式碼範例與需要下載的套件。」
 
 ### Prompt 2：與 Supabase 整合的正確寫法
 
-> 「給我一個使用 Supabase 建立 table 的流程，
-> 以及在 React 中使用 `supabase` 讀取 `ideas` 資料表的範例，  
-> 要求：由新到舊排序、使用登入存取使用者名稱、使用者有同時發送訊息的情況
-> 同時提醒我環境變數在 Vite 專案中要如何命名與使用。」
+> 「給我一個使用 Supabase 建立 table 的詳細流程。
+> 以及提供 RLS Policy 的設定建議。」
 
-### Prompt 3：UI + 元件化設計
+### Prompt 3：整合 Supabase Auth 並在 UI 顯示作者名稱
 
-> 「深色 UI、左右兩欄 layout、上方統計卡片、右側時間軸列表，  
-> 可以使用外部的 UI 套件。  
-> 幫我拆成多個元件。」
-
-### Prompt 4：整合 Supabase Auth 並在 UI 顯示作者名稱
-
-> 「在現有的 Idea Wall 中加入 Supabase Auth（Email + Password），  
+> 「在現有的功能中加入註冊/登入功能，  
 > 要求：  
 > 1. 未登入時不能送出想法，表單要顯示提示。  
 > 2. 註冊時可以設定暱稱。   
 > 3. 在清單卡片上顯示此暱稱。  
-> 同時提供 RLS policy 設定與 React 程式碼範例。」
+> 同時提供 Supabase 需要的設定與 React 程式碼範例。」
 
-### Prompt 5：多人同時使用與 Realtime 設計
+### Prompt 4：多人同時使用與 Realtime 設計
 
 > 「考慮『多個使用者同時送出想法』的情境。  
 > 幫我：
@@ -392,35 +386,6 @@ const handleSubmitIdea = async () => {
 > 2. 設計一個讓所有打開頁面的人可以即時看到新想法，包含：  
 >    - Supabase 額外的設定。  
 >    - 前端如何配合此改動更新畫面。」
-
----
-
-## 我如何使用 AI 協助開發
-
-在本作業中，我刻意將 AI 當成「協作夥伴」而不是「一鍵完成工具」，實際做法包括：
-
-1. **由我先決定需求與架構，再請 AI 補完細節**
-   - 例如：先決定資料表結構 `ideas(id, content, created_at, user_id, author_name)`，  
-     UI 採用左右兩欄（左：表單＋統計，右：清單），  
-     再請 AI 針對「已定義好的架構」提供具體實作。
-
-2. **對 AI 產出的程式碼做主動審查**
-   - 檢查是否：
-     - 符合 Vite + React 的最佳實踐。
-     - 沒有直接 mutate state（使用 immutable 寫法更新陣列）。
-     - 在 Supabase 回傳 error 時提供適當的錯誤訊息與 UI 提示。
-     - RLS policy 是否真的把 `user_id` 綁到 `auth.uid()`。
-
-3. **把重複性高、查文件耗時的部分交給 AI**
-   - 例如：Tailwind className 組合、`lucide-react` icon 選擇、  
-     layout 細節、AuthContext boilerplate 等。
-
-4. **將 AI 輔助過程整理成 README 的一部分**
-   - 將關鍵 Prompts 與思路記錄下來，  
-     未來團隊內部如果想用 AI 做類似的內部工具，可以直接參考這套流程。
-
-透過這樣的方式，我可以在 **維持程式品質與可維護性** 的前提下，  
-利用 AI 來 **加速查資料、產出樣板、微調 UI**，而不失去對專案的主導權。
 
 ---
 
