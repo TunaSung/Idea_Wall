@@ -5,7 +5,7 @@ import type { Idea } from "./types";
 import IdeaHeader from "./components/idea/IdeaHeader";
 import IdeaStats from "./components/idea/IdeaStats";
 import IdeaForm from "./components/idea/IdeaForm";
-import { IdeaToolbar, type IdeaFilter } from "./components/idea/IdeaToolbar";
+import IdeaToolbar, { type IdeaFilter } from "./components/idea/IdeaToolbar";
 import IdeaList from "./components/idea/IdeaList";
 import AuthPanel from "./components/auth/AuthPanel";
 import { useAuth } from "./contexts/AuthContext";

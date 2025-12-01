@@ -1,4 +1,5 @@
 import { Search, Filter } from "lucide-react";
+import { defineConfig } from "vite";
 
 export type IdeaFilter = "all" | "today" | "week";
 
@@ -17,7 +18,7 @@ const filters: { key: IdeaFilter; label: string }[] = ([
   { key: "week", label: "近 7 天" },
 ]);
 
-export function IdeaToolbar({
+function IdeaToolbar({
   filter,
   onFilterChange,
   search,
@@ -74,3 +75,5 @@ export function IdeaToolbar({
     </div>
   );
 }
+
+export default IdeaToolbar
